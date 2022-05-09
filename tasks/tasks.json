@@ -3,15 +3,15 @@
     "tasks": {
         "20": {
             "text": "Entregar trabalho de Filosofia",
-            "completed": false
+            "completed": true
         },
         "22": {
             "text": "Ler o livro",
-            "completed": false
+            "completed": true
         },
         "23": {
             "text": "Passar na farm\u00e1cia",
-            "completed": false
+            "completed": true
         }
     }
 }
