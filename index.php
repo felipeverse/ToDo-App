@@ -1,51 +1,74 @@
 <?php
+require __DIR__ . '/tasks/tasks.php';
 
-$todos = [];
-if (file_exists('todo.json')) {
-    $json = file_get_contents('todo.json');
-    $todos = json_decode($json, true);
+$tasks = getTasks();
+
+if ($_GET['errors']) {
+    $errors = json_decode($_GET['errors'], true);
 }
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Document</title>
-</head>
-<body>
+<?php include __DIR__ . '/partials/header.php' ?>
 
-    <form action="newtodo.php" method="POST">
-        <input type="text" name="todo_name" placeholder="Enter your todo">
-        <button>New Todo</button>
-    </form>
-    <br>
+    <div class="container justify-contents-center">
 
-    <?php foreach($todos as $todoName => $todo): ?>
-        <div style="margin-bottom: 20px;">
-            <form action="change_status.php" method="POST" style="display: inline-block">
-                <input type="hidden" name="todo_name" value="<?php echo $todoName ?>">
-                <input type="checkbox" name="" id="" name="todo_check" <?php echo $todo['completed'] ? 'checked':'' ?> >
-            </form>
-            <?php echo $todoName; ?>
-            <form action="delete.php" method="POST" style="display: inline-block;">
-                <input type="hidden" name="todo_name" value="<?php echo $todoName ?>">
-                <button>Del</button>
+        <div class="my-3 mx-2">
+            <?php if($errors['text']): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?php echo $errors['text']; ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+            <form class="d-flex" action="/tasks/new.php" method="POST">
+                <input class="form-control me-2" type="text" name="text" placeholder="Enter your ToDo" required>
+                <button class="btn btn-primary" type="submit" >
+                    <i class="bi bi-plus-lg"></i>
+                </button>
             </form>
         </div>
-    <?php endforeach; ?>
 
-    <script>
+        <?php foreach ($tasks as $id => $task): ?>
+            <div class="card my-2 mx-2">
+                <div class="card-body d-flex flex-row align-items-center">
+                    <form class="form-check" action="/tasks/change_status.php" method="POST" style="display: inline-block">
+                        <input type="hidden" name="id" value="<?php echo $id ?>">
+                        <input class="form-check-input" style="border-radius: 50%;" type="checkbox" name="" id="" name="todo_check" <?php echo $task['completed'] ? 'checked':'' ?> >
+                    </form>
+                    <span class="card-text flex-grow-1 mx-2"><?php echo $task['text'] ?></span>
+                    <div class="">
+                        <a class="text-success ms-3" href="#"><i class="bi bi-pencil-fill"></i></a>
 
-        const checkboxes = document.querySelectorAll('input[type=checkbox]');
-        checkboxes.forEach(ch => {
+                        <!-- Button trigger delete modal -->
+                        <a class="text-danger ms-3 deleteButton" data-toggle="modal" data-target="#deleteModal" data-id="<?php echo $id?>" href="#"><i class="bi bi-trash2-fill"></i></a>
+                    
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+            
+    <!-- Scripts -->
+    <script type="text/javascript">
+        // check tasks actions
+        const checkBoxes = document.querySelectorAll('input[type=checkbox]');
+        checkBoxes.forEach(ch => {
             ch.onclick = function () {
                 this.parentNode.submit();
             };
         });
 
+        // delete tasks actions
+        // const trashActions = document.querySelectorAll('a.deleteButtom');
+        // trashActions.forEach(ta => {
+        //     ta.onclick = function () {
+        //         this.parentNode.submit();
+        //     }
+        // });
+
     </script>
-</body>
-</html>
+        
+
+<?php include __DIR__ . '/partials/footer.php' ?>
+<?php include __DIR__ . "/_deleteModal.php" ?>
+    
