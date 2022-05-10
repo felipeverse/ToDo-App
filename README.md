@@ -1,4 +1,4 @@
-# CRUD desenvolvido com PHP, JSON e Bootstrap
+# To Do Web App desenvolvido com PHP, JSON e Bootstrap
 
 Para executar o projeto é necessário ter o Docker e Docker-compose instalado.
 
