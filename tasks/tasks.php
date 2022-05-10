@@ -57,6 +57,19 @@ function deleteTask($id)
     putJson($json);
 }
 
+function updateTask($id, $task)
+{
+    checkId($id);
+
+    $tasks = getTasks();
+    $tasks[$id] = $task;
+
+    $json = getJson();
+    $json['tasks'] = $tasks;
+
+    putJson($json);
+}
+
 function changeTaskStatus($id) 
 {
     checkId($id);

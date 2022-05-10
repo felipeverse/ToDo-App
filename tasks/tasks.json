@@ -1,17 +1,9 @@
 {
-    "lastId": 23,
+    "lastId": 33,
     "tasks": {
-        "20": {
-            "text": "Entregar trabalho de Filosofia",
-            "completed": true
-        },
-        "22": {
-            "text": "Ler o livro",
-            "completed": true
-        },
-        "23": {
-            "text": "Passar na farm\u00e1cia",
-            "completed": true
+        "33": {
+            "text": "Go to the market",
+            "completed": false
         }
     }
 }

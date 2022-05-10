@@ -24,7 +24,6 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     // Delete Modal script
     $(function () {
